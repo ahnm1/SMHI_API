@@ -1,3 +1,2 @@
 __pycache__
-data/raw/**
-data/clean/**
+.DS_Store
