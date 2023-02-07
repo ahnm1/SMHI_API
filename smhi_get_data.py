@@ -40,27 +40,15 @@ stationer = sort_stations('stationer.json')
 temp = 1
 wind = 25
 parameter = temp
-station   = 52350 # Malmö
+# station   = 52350 # Malmö
 
 
 stad_dict = {
-    'hörby':    53530,
-    'Hästveda': 63160,
-    'Helsingborg': 62040,
-    'Halmstad':  62410,
-    'Falsterbo': 52230,
-    'Karlshamn': 64130,
-    'kalmar':    66420,
-    'karlskrona': 65090,    
-    'Kristianstad': 64030,
-    'Ljungby': 63510,
-    'Lund':  53430,
-    'malmö': 52350,
-    'Malmö-Sturup': 53300,
-    'Osby':     63220,
-    'Perstorp': 11001,
-    'Ronneby-Bredåkra': 65160,
-    'Växjö': 64510,
+
+    'Ljungby A': 63510,
+    'Ölands södra': 66110,
+    'Hallands Väderö A': 62260,
+    'Falsterbo A': 52240,
 }
 
 def get_smhi_csv(name, station_id, parameter):
@@ -72,13 +60,14 @@ def get_smhi_csv(name, station_id, parameter):
     
     re = requests.get(url_down)
 
-    with open(f'{name}_{station_id}_{parameter}.csv', 'w') as out:
+    with open(f'data/raw/{name}_{station_id}_{parameter}.csv', 'w', encoding='utf-8-sig') as out:
         out.write(re.text)
 
 for k,v in stad_dict.items():
-    print(k, v)
+    # print(k, v)
     get_smhi_csv(k, v, parameter)
+    
     sleep(0.4)
 
-get_smhi_csv(parameter, station)
+# get_smhi_csv(parameter, station)
 

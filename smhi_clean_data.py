@@ -1,20 +1,14 @@
 #%%
+import os
 import pandas as pd
-
-df = pd.read_csv('raw/malmö_52350_1.csv', delimiter=';', skiprows = 10)
-dfc = df[df.columns[:3]]
-dfc
 
 
 #%%
 
-import os
-# import pandas as pd
-
 def clean(csv_file:str, skip:int):
     print(f'Processing: { csv_file }')
 
-    df = pd.read_csv('raw/' + 
+    df = pd.read_csv('data/raw/' + 
         f'{ csv_file }',
         delimiter = ';',
         skiprows  = skip,
@@ -22,25 +16,27 @@ def clean(csv_file:str, skip:int):
     
     dfc = df[df.columns[:3]]
 
-    return dfc.to_csv('clean/' + f'clean_{ csv_file }', index = False)
+    return dfc.to_csv('data/clean/' + f'clean_{ csv_file }', index = False)
 
 
 #%%
-raw_list = os.listdir('raw')
+raw_list = os.listdir('data/raw')#'data/raw')
 
-for file in raw_list[1]:
-
-    if file.startswith('Halmstad_62410_1') or \
-        file.startswith('Osby_63220_1') or \
-            file.startswith('Lund_53430_1'):
+print(raw_list)
+for file in raw_list:
+    print(file)
+    if file.startswith('Halmstad') or \
+        file.startswith('Osby') or \
+            file.startswith('Lund'):
 
         clean(file, 12)
 
-    elif file.startswith('Kristianstad_64030_1'):
+    elif file.startswith('Kristianstad'):
         clean(file, 13)
 
     else:
         clean(file, 9)
+
 
 
 #%%
