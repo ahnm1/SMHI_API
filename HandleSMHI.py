@@ -4,8 +4,11 @@ import pandas as pd
 class HandleSMHI:
 
     def __init__(self):
-        
-        '''Handle .csv files from SMHI'''
+        '''Handle .csv files from SMHI. Use: \n
+        get_raw_csv(name, station_id, parameter), \n
+        clean_csv(filename) or \n
+        get_data_between(start_date, end_date, filename)
+        '''
         pass
 
     def get_raw_csv(self, name, station_id, parameter):
@@ -45,7 +48,11 @@ class HandleSMHI:
 
 
     def get_data_between(self, start_date, end_date, filename):
-        '''Save data between dates into "data/target" folder'''
+        '''Save data between dates into "data/target" folder. \n
+        Searches in 'data/clean/' folder. \n
+        Valid date format: '2021-11-01' \n
+        filename: Something like 'clean_Falsterbo_a_52240_1.csv'
+        '''
 
         df  = pd.read_csv('data/clean/' + filename, index_col = 'Datum')
 
@@ -58,7 +65,6 @@ class HandleSMHI:
         
         except:
             return 0
-
 
 
 if __name__ == '__main__':
