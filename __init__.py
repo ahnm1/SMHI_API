@@ -49,8 +49,10 @@ def merge_samples():
     targets = os.listdir('data/target')
     merger  = MergerSMHI()
     merger.merge_dfs(targets)
+    merger.concat_date_time(os.listdir('data/merged'))
 
 if __name__ == '__main__':
+    # get_raw()
     # get_raw('wind')
     # clean_raw()
     # save_samples('2021-11-01', '2022-10-31')
