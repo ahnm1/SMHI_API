@@ -35,8 +35,8 @@ class MergerSMHI:
                 return f'Error merging { targets[i] } and { targets[i+1]}'
 
 
-    def concat_date_time(self, targets):
-
+    def concat_date_time(self, targets:list):
+        targets.sort
         for i in range(len(targets)):
             print('Processing:', targets[i])
 
