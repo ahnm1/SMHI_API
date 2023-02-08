@@ -1,4 +1,3 @@
-
 import os
 import pandas as pd
 from HandleSMHI import HandleSMHI
@@ -56,6 +55,6 @@ if __name__ == '__main__':
     get_raw()
     get_raw('wind')
     clean_raw()
-    save_samples('2021-11-01', '2022-10-31')
+    save_samples('2021-10-01', '2022-09-30')
     merge_samples()
     pass
