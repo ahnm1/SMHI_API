@@ -3,28 +3,39 @@ import pandas as pd
 
 
 class MergerSMHI:
-    def __init__(self):
-        '''Merge smaller files. Use: \n
-        merge_dfs(targets:list) or   \n
-        concat_date_time(targets:list)
-        '''
+    '''Merge smaller files.     \n    
+    ----------                     
+    Methods:                       
+    ----------                  
+        merge_dfs(targets : list)      
+        concat_date_time(targets : list)
+    '''
+    
+    def __init__(self):    
         pass
     
     def merge_dfs(self, targets:list):
-        '''os.listdir('data/target') works as target. \n
-        Will search in folder: data/target/           \n
-        Saves merget file to: data/merged/ '''
+        '''Will search in folder: data/target/  \n
+        Saves merged file to: data/merged/      \n                
+        Parameters:                           
+        ----------                            
+            target : list   
+        ----------                             
+        Example : os.listdir('data/target') '''       
+            
 
         targets.sort()
         target_path = 'data/target/'
 
         for i in range(len(targets)):
             try:
+
+                # try changing '100' to 'len(targets)'
                 if i in range(0, 100, 2):
 
-                    print('Processing:\n1:', targets[i], '\n2:', targets[i+1])
+                    print('Merging:\n1:', targets[i], '\n2:', targets[i+1])
 
-                    df1 = pd.read_csv(target_path + targets[i])  #, parse_dates = ['Datum', 'Tid (UTC)'])
+                    df1 = pd.read_csv(target_path + targets[i])
                     df2 = pd.read_csv(target_path + targets[i+1])
 
                     df2 = df2.drop('Datum', axis = 1)
@@ -43,19 +54,22 @@ class MergerSMHI:
 
 
     def concat_date_time(self, targets:list):
-        '''os.listdir('data/merged') works as target. \n
-        Will search in folder: data/merged/           \n
-        Concatenate 'Date' and 'Time' into 'timestamp'\n
-        Adds 'f_' to beginning of filename.           \n
-        Saves merget file to: data/final/ 
-        '''
+        '''Searches in folder: data/merged/.                \n
+        Concatenates 'Date' and 'Time' into 'timestamp'.    \n
+        Adds 'f_' to beginning of filename.                 \n
+        Saves merget file to: data/final/.                  \n                               
+        Parameters:                                   
+        ----------                                    
+            target : list
+        ----------     
+        Example : os.listdir('data/merged') '''
 
         targets.sort
         for i in range(len(targets)):
-            print('Processing:', targets[i])
+            print(f'Concatenating: {targets[i]}')
 
-            df = pd.read_csv('data/merged/' + targets[i])#, parse_dates=['Datum', 'Tid (UTC)'])
-            df['timestamp'] = df['Datum'] + ' ' + df['Tid (UTC)']# + df['Lufttemperatur'] + df['Max av MedelVindhastighet']
+            df = pd.read_csv('data/merged/' + targets[i])
+            df['timestamp'] = df['Datum'] + ' ' + df['Tid (UTC)']
 
             dfc = df.drop(['Datum', 'Tid (UTC)'], axis = 1)
             dfc.columns = ['temperature', 'wind_avg', 'timestamp']
@@ -65,11 +79,11 @@ class MergerSMHI:
         
 
 if __name__ == '__main__':
-    t_targets = os.listdir('data/target')
-    m_targets = os.listdir('data/merged')
+    # t_targets = os.listdir('data/target')
+    # m_targets = os.listdir('data/merged')
     merger  = MergerSMHI()
 
-    merger.merge_dfs(t_targets)
-    merger.concat_date_time(m_targets)
+    # merger.merge_dfs(t_targets)
+    # merger.concat_date_time(m_targets)
 
 
