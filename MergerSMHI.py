@@ -38,14 +38,13 @@ class MergerSMHI:
                     df1 = pd.read_csv(target_path + targets[i])
                     df2 = pd.read_csv(target_path + targets[i+1])
 
-                    df2 = df2.drop('Datum', axis = 1)
 
                     new_name = 'data/merged/' + \
                         targets[i].split('_')[2] + '_' + \
                             targets[i].split('_')[3]
 
-                    df = pd.concat([df1, df2.drop('Tid (UTC)', axis = 1)], axis=1, join = 'inner')
-                    
+                    df = df1.merge(df2, on = ['Datum', 'Tid (UTC)'], how = 'outer')
+
                     df.to_csv(f'{new_name}.csv', index = False)
 
             except (ValueError, KeyError):
@@ -73,7 +72,9 @@ class MergerSMHI:
 
             dfc = df.drop(['Datum', 'Tid (UTC)'], axis = 1)
             dfc.columns = ['temperature', 'wind_avg', 'timestamp']
+            dfc         = dfc[['timestamp', 'temperature', 'wind_avg']]
 
+            # dfcc = dfc.reinde
             dfc.to_csv('data/final/f_' + targets[i], index = False)
 
         
