@@ -52,5 +52,3 @@ fig.update_layout(title='Temperature & Wind',
                    yaxis_title='Value'
                 )
 
-
-# %%
