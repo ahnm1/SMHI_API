@@ -31,7 +31,7 @@ class MergerSMHI:
             try:
 
                 # try changing '100' to 'len(targets)'
-                if i in range(0, 100, 2):
+                if i in range(0, 200, 2):
 
                     print('Merging:\n1:', targets[i], '\n2:', targets[i+1])
 
@@ -79,11 +79,11 @@ class MergerSMHI:
         
 
 if __name__ == '__main__':
-    # t_targets = os.listdir('data/target')
-    # m_targets = os.listdir('data/merged')
+    t_targets = os.listdir('data/target')[:2]
+    m_targets = os.listdir('data/merged')[:1]
     merger  = MergerSMHI()
 
-    # merger.merge_dfs(t_targets)
-    # merger.concat_date_time(m_targets)
+    merger.merge_dfs(t_targets)
+    merger.concat_date_time(m_targets)
 
 
