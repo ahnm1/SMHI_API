@@ -32,8 +32,12 @@ class MergerSMHI:
 
                 # try changing '100' to 'len(targets)'
                 if i in range(0, 200, 2):
+                    city = targets[i].split('_')[2]
+                    city_id = targets[i].split('_')[-2]
 
                     print('Merging:\n1:', targets[i], '\n2:', targets[i+1])
+
+                    # print(city, city_id)
 
                     df1 = pd.read_csv(target_path + targets[i])
                     df2 = pd.read_csv(target_path + targets[i+1])
@@ -42,9 +46,12 @@ class MergerSMHI:
                     new_name = 'data/merged/' + \
                         targets[i].split('_')[2] + '_' + \
                             targets[i].split('_')[3]
-
+                    
                     df = df1.merge(df2, on = ['Datum', 'Tid (UTC)'], how = 'outer')
+                    df['city'] = city
+                    df['city_id'] = city_id
 
+                    # print(df)
                     df.to_csv(f'{new_name}.csv', index = False)
 
             except (ValueError, KeyError):
@@ -70,21 +77,21 @@ class MergerSMHI:
             df = pd.read_csv('data/merged/' + targets[i])
             df['timestamp'] = df['Datum'] + ' ' + df['Tid (UTC)']
 
-            dfc = df.drop(['Datum', 'Tid (UTC)'], axis = 1)
-            dfc.columns = ['temperature', 'wind_avg', 'timestamp']
-            dfc         = dfc[['timestamp', 'temperature', 'wind_avg']]
+            dfc         = df.drop(['Datum', 'Tid (UTC)'], axis = 1)
+            dfc.columns = ['temperature', 'wind_avg', 'city', 'city_id', 'timestamp']
+            dfcc         = dfc[['timestamp', 'temperature', 'wind_avg', 'city', 'city_id']]
 
             # dfcc = dfc.reinde
-            dfc.to_csv('data/final/f_' + targets[i], index = False)
+            dfcc.to_csv('data/final/f_' + targets[i], index = False)
 
         
 
 if __name__ == '__main__':
-    t_targets = os.listdir('data/target')[:2]
-    m_targets = os.listdir('data/merged')[:1]
+    t_targets = os.listdir('data/target')#[:2]
+    m_targets = os.listdir('data/merged')#[:1]
     merger  = MergerSMHI()
 
-    merger.merge_dfs(t_targets)
+    # merger.merge_dfs(t_targets)
     merger.concat_date_time(m_targets)
 
 
